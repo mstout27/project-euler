@@ -4,9 +4,6 @@
 
 using namespace std;
 
-//Euler problems
-
-//   p1       ////////////////////////
 int sumFind(){
     int sum = 0;
     for(int i=0; i!=1000; i++){
@@ -24,6 +21,6 @@ int sumFind(){
 
 int main(){
     
- cout << sumFind() << endl;                  //p1 - CORRECT
+ cout << sumFind() << endl;       
  
 }

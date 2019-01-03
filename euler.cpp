@@ -179,22 +179,27 @@ int orderedPrimeFind(int n){
     return prime;
 }
 
-
 ///////  p8 ////////////////////////////////////////////
-/*
 int maxLargeProd(){
-    
-    char buf[1000];
-    FILE *inputFile = fopen(euler_p8.txt, "r");
-    
-    while (fgets(buf, 1000, ptr_file) != NULL)
-        cout << buf << endl;
+    int size = 1000;
+    char buf[size];
+    FILE *inputFile = fopen("problem8_input.txt", "r");
+
    
-   cout << buf[0] << endl;
+    unsigned long long currProduct;
+    unsigned long long largestProduct;
+    for(int i = 0; i < size-12; i++){
+        currProduct = 1;
+        for(int j = i; j < i + 13; j++){
+            currProduct *= (unsigned long)buf[j]; 
+        }
+        if (currProduct >= largestProduct){
+            largestProduct = currProduct;
+        }
+    }
+    return largestProduct;
+    
 }
-*/
-
-
 
 int main(){
     
@@ -204,8 +209,8 @@ int main(){
  //cout << palindromeProduct() << endl;        //p4 - CORRECT
  //cout << smallestMultiple() << endl;         //p5 - make faster!
  //cout << sqDif() << endl;                    //p6 - CORRECT
- cout << orderedPrimeFind(10001) << endl;    //p7 - CORRECT (a tad slow)
- //cout << maxLargeProd() << endl;
+ //cout << orderedPrimeFind(10001) << endl;    //p7 - CORRECT (a tad slow)
+ cout << maxLargeProd() << endl;
  
  
 }

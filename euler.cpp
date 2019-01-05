@@ -205,8 +205,6 @@ unsigned long maxLargeProd(){
         fputs("Error reading file",stderr);
         exit(3);
     }
-
-
     unsigned long currProduct;
     unsigned long largestProduct = 0;
     int temp;
@@ -233,8 +231,56 @@ unsigned long maxLargeProd(){
     fclose(inputFile);
     free(buf);
     return largestProduct;
-    
 }
+
+//////// p9 /////////////
+int findTripletSum(){
+    int m = 1;
+    int a;
+    int b;
+    int c;
+    bool mexit = false;
+    int product;
+    while(m < 100 && !mexit){   
+        int n = m+1;
+        bool nexit = false;
+        while(n < 100 && !nexit){
+            cout << "current values of m, n: " << m << ' ' << n << endl;
+            a = pow(n,2) - pow(m,2);
+            b = 2*n*m;
+            c = pow(n,2) + pow(m,2);
+
+            cout << "new triplet: " << a <<' '<< b <<' '<< c << endl;
+
+            n++;
+            
+            if(a + b + c >= 1000){
+                nexit = true;
+            }
+            int multiple = 2;
+            while(a + b + c <= 1000){
+                if(a + b + c == 1000){
+                    cout << "FINAL TRIPLET FOUND: " << a <<' '<< b <<' '<< c << endl;
+                    product = a*b*c;
+                    mexit = true;
+                }
+                a *= multiple;
+                b *= multiple;
+                c *= multiple;
+                cout << "triplet of multiple " << multiple <<": " << a <<' '<< b <<' '<< c << endl;
+                multiple++;
+            }
+            
+            
+        }        
+        m++;
+    }
+
+    return product;
+
+
+}
+
 
 int main(){
     
@@ -246,6 +292,6 @@ int main(){
  //cout << sqDif() << endl;                    //p6 - CORRECT
  //cout << orderedPrimeFind(10001) << endl;    //p7 - CORRECT (a tad slow)
  //cout << maxLargeProd() << endl;             //p8 - CORRECT
- 
+ cout << findTripletSum() << endl;
  
 }

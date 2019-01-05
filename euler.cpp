@@ -1,6 +1,8 @@
 #include <iostream>
 #include <math.h>
-#include<stdio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <algorithm>
 
 using namespace std;
 
@@ -180,23 +182,56 @@ int orderedPrimeFind(int n){
 }
 
 ///////  p8 ////////////////////////////////////////////
-int maxLargeProd(){
-    int size = 1000;
-    char buf[size];
+unsigned long maxLargeProd(){
+    long size;
+    char* buf;
     FILE *inputFile = fopen("problem8_input.txt", "r");
-
-   
-    unsigned long long currProduct;
-    unsigned long long largestProduct;
-    for(int i = 0; i < size-12; i++){
-        currProduct = 1;
-        for(int j = i; j < i + 13; j++){
-            currProduct *= (unsigned long)buf[j]; 
-        }
-        if (currProduct >= largestProduct){
-            largestProduct = currProduct;
-        }
+    if(!inputFile){
+        fputs("Error opening file",stderr);
+        exit(1);
     }
+
+    fseek(inputFile, 0, SEEK_END);
+    size = ftell(inputFile);
+    rewind(inputFile);
+
+    buf = (char*)malloc(size);
+    if(!buf){
+        fputs("Error allocating memory",stderr);
+        exit(2);
+    }
+    size_t result = fread(buf, 1, size, inputFile);
+    if(result != size){
+        fputs("Error reading file",stderr);
+        exit(3);
+    }
+
+
+    unsigned long currProduct;
+    unsigned long largestProduct = 0;
+    int temp;
+    for(int runStart = 0; runStart < size-12; runStart++){
+        currProduct = 1;
+        cout << "current run: ";
+        if(buf[runStart] != '0'){
+            for(int j = runStart; j < runStart + 13; j++){
+                if(buf[j] == '\n'){
+                    j++;
+                    runStart++;
+                }
+                currProduct *= (int)buf[j] - 48;    
+                cout << buf[j];
+            }
+        }
+        cout << endl << "current product = " << currProduct << endl;
+        if (currProduct >= largestProduct){
+            largestProduct = currProduct;  
+        }
+        cout << "largest product = " << largestProduct << '\n' << endl;
+    }
+
+    fclose(inputFile);
+    free(buf);
     return largestProduct;
     
 }
@@ -210,7 +245,7 @@ int main(){
  //cout << smallestMultiple() << endl;         //p5 - make faster!
  //cout << sqDif() << endl;                    //p6 - CORRECT
  //cout << orderedPrimeFind(10001) << endl;    //p7 - CORRECT (a tad slow)
- cout << maxLargeProd() << endl;
+ //cout << maxLargeProd() << endl;             //p8 - CORRECT
  
  
 }
